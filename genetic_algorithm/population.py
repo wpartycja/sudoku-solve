@@ -13,6 +13,7 @@ class Population():
         self.population_quality = 0
         self.selection_rate = selection_rate
         self.crossover_rate = crossover_rate
+        self.best_candindate = Candidate(base_table)
 
     def find_legal_values(self, base_table):
 
@@ -50,16 +51,24 @@ class Population():
                             cand.table[i][j] = random.choice(self.legal_values[i][j])
                 
             self.candidates.append(cand)
+            self.update_candidates_quality()
+            self.update_population_quality()
+
         
     def update_candidates_quality(self):
         for candidate in self.candidates:
             candidate.update_quality()
 
-    def update_populaiton_quality(self):
+    def update_population_quality(self):
         self.update_candidates_quality()
         for cand in self.candidates:
             if cand.quality > self.population_quality:
                 self.population_quality = cand.quality
+                self.best_candindate = cand
+    
+    def get_elite(self, elite_size):
+        self.elite = sorted(self.candidates, key=lambda c: c.quality, reverse=True)[elite_size-1]
+        return self.elite
         
     def tournament(self):
         cand1 = random.choice(self.candidates)
@@ -77,13 +86,10 @@ class Population():
     def cycle_crossover(self, parent1, parent2):
 
         nr_rows_parent1 = random.randint(1, 8)
-
         rows1_idx = set()
 
         while len(rows1_idx) != nr_rows_parent1:
             rows1_idx.add(random.randint(0, 8))
-        
-        # rows2_idx = set(range(9)).difference(rows1_idx)
 
         child1 = Candidate(self.base_table)
         child2 = Candidate(self.base_table)
