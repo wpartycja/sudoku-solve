@@ -47,6 +47,6 @@ class Population():
                 
             self.candidates.append(cand)
         
-    def calculate_population_quality(self):
+    def update_candidates_quality(self):
         for candidate in self.candidates:
             candidate.update_quality()
