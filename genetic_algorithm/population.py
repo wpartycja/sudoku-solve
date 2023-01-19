@@ -9,6 +9,7 @@ class Population():
     def __init__(self, base_table):
         self.candidates = []
         self.legal_values = self.find_legal_values(base_table)
+        self.population_quality = 0
 
     def find_legal_values(self, base_table):
 
@@ -50,3 +51,12 @@ class Population():
     def update_candidates_quality(self):
         for candidate in self.candidates:
             candidate.update_quality()
+
+    def update_populaiton_quality(self):
+        self.update_candidates_quality()
+        for cand in self.candidates:
+            if cand.quality > self.population_quality:
+                self.population_quality = cand.quality
+        
+    
+    
