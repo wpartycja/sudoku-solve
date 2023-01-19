@@ -7,7 +7,7 @@ from global_var import DIM
 
 
 class Candidate:
-    def __init__(self, base_table: np.array[np.array[int]], table: Optional[np.array] = None) -> None:
+    def __init__(self, base_table, table = None) -> None:
         self.base_table = base_table
         self.table = np.zeros((DIM, DIM), dtype=int) if table is None else table
         self.quality = 0
