@@ -67,8 +67,8 @@ class Population():
                 self.best_candindate = cand
     
     def get_elite(self, elite_size):
-        self.elite = sorted(self.candidates, key=lambda c: c.quality, reverse=True)[elite_size-1]
-        return self.elite
+        elite = sorted(self.candidates, key=lambda c: c.quality, reverse=True)[:elite_size-1]
+        return elite
         
     def tournament(self):
         cand1 = random.choice(self.candidates)
@@ -83,7 +83,7 @@ class Population():
         
         return stronger if rate < self.selection_rate else weaker
     
-    def cycle_crossover(self, parent1, parent2):
+    def crossover(self, parent1, parent2):
 
         nr_rows_parent1 = random.randint(1, 8)
         rows1_idx = set()
