@@ -85,7 +85,7 @@ class Sudoku:
             self.population.update_candidates_quality()
             self.population.update_population_quality()
 
-sudoku = Sudoku('./sudoku_mid.txt', candidates_number=500, generations=1000, mutation_rate=1, selection_rate=0.5, crossover_rate=0.8, elite_size=50)
+sudoku = Sudoku('./sudoku_hard.txt', candidates_number=500, generations=1000, mutation_rate=1, selection_rate=0.5, crossover_rate=0.8, elite_size=50)
 sudoku.solve()
             
 
