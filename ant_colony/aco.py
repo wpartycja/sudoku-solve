@@ -1,5 +1,6 @@
 from random import randint, uniform, choices
 from copy import deepcopy
+import random
 
 import numpy as np
 
@@ -16,6 +17,7 @@ class ACO:
             greediness: float = 0.1,
             evaporation: float = 0.8
     ) -> None:
+        random.seed(1330)
         self.size = size
         self.ants = ants
         self.greediness = greediness
