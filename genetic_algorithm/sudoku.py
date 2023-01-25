@@ -6,18 +6,18 @@ from candidate import Candidate
 
 class Sudoku:
 
-    def __init__(self, path, candidates_number, generations, mutation_rate, selection_rate, crossover_rate, elite_size):
+    def __init__(self, path, candidates_number, generations, mutation_rate, selection_rate, elite_size):
         with open (path, "r") as file:
             self.base_table = np.loadtxt(file).reshape((DIM, DIM)).astype(int)
-            self.candidates_number = candidates_number
-            self.generations = generations
-            self.mutation_rate = mutation_rate
-            self.selection_rate = selection_rate
-            self.crossover_rate = crossover_rate
-            self.elite_size = elite_size
+        self.candidates_number = candidates_number
+        self.generations = generations
+        self.mutation_rate = mutation_rate
+        self.selection_rate = selection_rate
+        self.elite_size = elite_size
+
     
     def solve(self):
-        self.population = Population(self.base_table, self.selection_rate, self.crossover_rate)
+        self.population = Population(self.base_table, self.selection_rate)
         self.population.new_population(self.candidates_number)
 
         prev_quality = self.population.population_quality
@@ -61,7 +61,7 @@ class Sudoku:
             if best_quality >= 1:
                 print(f' Solution found at generation {generation}! Here it comes:')
                 print(self.population.best_candindate.table)
-                return 
+                return generation
             else: 
                 if generation % 10 == 0:
                     print(f'Best quality is: {self.population.population_quality}')
@@ -78,17 +78,12 @@ class Sudoku:
 
             
             # at the end not to be affected by crossover / mutation
-            next_population.extend(elites) if self.elite_size != 1 else next_population.append(elites)
+            if len(elites) != 0:
+                next_population.extend(elites) if self.elite_size != 1 else next_population.append(elites)
 
             # Next population
             self.population.candidates = next_population
             self.population.update_candidates_quality()
             self.population.update_population_quality()
-
-sudoku = Sudoku('./sudoku_hard.txt', candidates_number=500, generations=1000, mutation_rate=1, selection_rate=0.5, crossover_rate=0.8, elite_size=50)
-sudoku.solve()
-            
-
-
-            
-
+    
+        return generation

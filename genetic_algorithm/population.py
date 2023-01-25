@@ -6,13 +6,13 @@ import numpy as np
 
 class Population():
 
-    def __init__(self, base_table, selection_rate, crossover_rate):
+    def __init__(self, base_table, selection_rate):
+        random.seed(4)
         self.candidates = []
         self.base_table = base_table
         self.legal_values = self.find_legal_values(base_table)
         self.population_quality = 0
         self.selection_rate = selection_rate
-        self.crossover_rate = crossover_rate
         self.best_candindate = Candidate(base_table)
 
     def find_legal_values(self, base_table):
@@ -54,7 +54,6 @@ class Population():
             self.update_candidates_quality()
             self.update_population_quality()
 
-        
     def update_candidates_quality(self):
         for candidate in self.candidates:
             candidate.update_quality()
