@@ -1,8 +1,10 @@
 import numpy as np
+import random
 
 
 class Board:
     def __init__(self, size: int, puzzle: list[list[int]]) -> None:
+        random.seed(1330)
         self.size = size
         self.puzzle = puzzle
         self.pheromones = np.ones((size, size, 9)) / size

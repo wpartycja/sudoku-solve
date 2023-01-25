@@ -1,5 +1,6 @@
 from random import randint, uniform, choices
 from copy import deepcopy
+import random
 
 import numpy as np
 
@@ -16,6 +17,7 @@ class ACO:
             greediness: float = 0.1,
             evaporation: float = 0.8
     ) -> None:
+        random.seed(1330)
         self.size = size
         self.ants = ants
         self.greediness = greediness
@@ -114,7 +116,7 @@ class ACO:
         for ant in self.colony:
             ant.solution = Solution(deepcopy(self.puzzle))
 
-    def solve(self, path: str) -> None:
+    def solve(self, path: str) -> int:
         self.load_puzzle_from_txt(path)
 
         self.board = Board(self.size, self.puzzle)
@@ -125,7 +127,9 @@ class ACO:
         best_solution = Solution(self.puzzle)
         best_ant = self.colony[0]
 
+        generations = 0
         while not ACO.is_solved(best_solution):
+            generations += 1
             for _ in range(81):
                 for ant in self.colony:
                     if self.is_fixed(ant.position):
@@ -140,6 +144,12 @@ class ACO:
             self.update_pheromones(best_ant)
             self.evaporate_pheromones()
             self.reset_solutions()
-            print(best_solution.evaluate()/3)
+            if generations == 1000:
+                break
+            if not generations % 10:
+                ...
+                # print(f'Generation {generations}:', best_solution.evaluate()/3)
 
-        print(best_solution.solution_matrix)
+        # print(f'Generation: {generations}')
+        # print(best_solution.solution_matrix)
+        return generations

@@ -1,4 +1,5 @@
 from copy import deepcopy
+import random
 
 from .board import Board
 from .solution import Solution
@@ -6,6 +7,7 @@ from .solution import Solution
 
 class Ant:
     def __init__(self, board: Board, position: list[int]) -> None:
+        random.seed(1330)
         self.board = board
         self.solution = Solution(deepcopy(self.board.puzzle))
         self.start_position = deepcopy(position)

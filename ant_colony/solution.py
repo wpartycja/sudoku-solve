@@ -1,6 +1,9 @@
+import random
+
 
 class Solution:
     def __init__(self, solution: list[list[int]]) -> None:
+        random.seed(1330)
         self.solution_matrix = solution
         self.size = len(self.solution_matrix)
 
